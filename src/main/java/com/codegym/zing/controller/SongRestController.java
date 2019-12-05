@@ -42,6 +42,7 @@ public class SongRestController {
         if (song.equals(null)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        songService.delete(id);
         else return new ResponseEntity<>(HttpStatus.OK);
     }
 
