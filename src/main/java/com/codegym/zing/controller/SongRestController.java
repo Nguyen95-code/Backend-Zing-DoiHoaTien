@@ -1,6 +1,8 @@
 package com.codegym.zing.controller;
 
+import com.codegym.zing.model.Singer;
 import com.codegym.zing.model.Song;
+import com.codegym.zing.service.SingerService;
 import com.codegym.zing.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,12 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
 public class SongRestController {
     @Autowired
     private SongService songService;
+
+    @Autowired
+    private static SingerService singerService;
+
     @GetMapping("/songs")
     public ResponseEntity<List<Song>> listSong(){
         List<Song> songs = (List<Song>) songService.findAll();
@@ -33,6 +40,10 @@ public class SongRestController {
         if (song.equals(null)){
             return new ResponseEntity<Song>(HttpStatus.NOT_FOUND);
         }
+        Singer singer = singerService.findById(song.getSingerId());
+        Set<Song> myList = singer.getMyList();
+        myList.add(song);
+        singer.setMyList(myList);
         return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
 

@@ -6,12 +6,19 @@ import com.codegym.zing.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class SingerServiceImpl implements SingerService {
     @Autowired
     private SingerRepository singerRepository;
+
+    @Override
+    public List<Singer> findAll() {
+        return singerRepository.findAll();
+    }
+
     @Override
     public Singer findById(Long id) {
         Optional<Singer> singer = singerRepository.findById(id);
@@ -19,5 +26,10 @@ public class SingerServiceImpl implements SingerService {
             return singer.get();
         }
         return null;
+    }
+
+    @Override
+    public void save(Singer singer) {
+        singerRepository.save(singer);
     }
 }

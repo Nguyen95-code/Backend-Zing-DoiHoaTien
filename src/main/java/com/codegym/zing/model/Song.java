@@ -19,7 +19,6 @@ public class Song {
     private String description;
     private LocalDate createDate;
 
-
     private Long singerId;
     public Song() {
     }

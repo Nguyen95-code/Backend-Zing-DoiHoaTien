@@ -10,8 +10,6 @@ public class Singer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String username;
-    private String password;
     private String image;
 
     @OneToMany(targetEntity = Song.class)
@@ -19,10 +17,11 @@ public class Singer {
     @OneToMany(targetEntity = Song.class)
     private Set<Song> playlist;
 
-    public Singer(String name, String username, String password, String image) {
+    public Singer() {
+    }
+
+    public Singer(String name, String image) {
         this.name = name;
-        this.username = username;
-        this.password = password;
         this.image = image;
     }
 
@@ -40,22 +39,6 @@ public class Singer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getImage() {
