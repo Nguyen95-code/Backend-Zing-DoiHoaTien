@@ -1,7 +1,5 @@
 package com.codegym.zing.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
