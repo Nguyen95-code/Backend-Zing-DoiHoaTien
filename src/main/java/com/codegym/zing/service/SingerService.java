@@ -1,11 +1,9 @@
 package com.codegym.zing.service;
 
 import com.codegym.zing.model.Singer;
+import com.codegym.zing.model.Song;
 
 import java.util.List;
 
-public interface SingerService {
-    List<Singer> findAll();
-    Singer findById(Long id);
-    void save(Singer singer);
+public interface SingerService extends GeneralService<Singer>{
 }

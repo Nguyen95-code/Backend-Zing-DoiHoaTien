@@ -1,6 +1,7 @@
 package com.codegym.zing.service.impl;
 
 import com.codegym.zing.model.Singer;
+import com.codegym.zing.model.Song;
 import com.codegym.zing.repository.SingerRepository;
 import com.codegym.zing.service.SingerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,5 @@ public class SingerServiceImpl implements SingerService {
     public void save(Singer singer) {
         singerRepository.save(singer);
     }
+
 }

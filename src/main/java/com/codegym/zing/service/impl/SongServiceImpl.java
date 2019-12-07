@@ -6,6 +6,7 @@ import com.codegym.zing.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,7 +15,7 @@ public class SongServiceImpl implements SongService {
     private SongRepository songRepository;
 
     @Override
-    public Iterable<Song> findAll() {
+    public List<Song> findAll() {
         return songRepository.findAll();
     }
 

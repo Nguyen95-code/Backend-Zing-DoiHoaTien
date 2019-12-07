@@ -1,11 +1,9 @@
 package com.codegym.zing.model;
 
-import org.apache.tomcat.jni.Local;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "song")
@@ -19,17 +17,20 @@ public class Song {
     private String description;
     private LocalDate createDate;
 
-    private Long singerId;
+    @ManyToOne
+    @JoinColumn(name = "singerId")
+    private Singer singer;
+
     public Song() {
     }
 
-    public Song(String name, String link, String image, String description, LocalDate createDate, Long singerId) {
+    public Song(String name, String link, String image, String description, LocalDate createDate, Singer singer) {
         this.name = name;
         this.link = link;
         this.image = image;
         this.description = description;
         this.createDate = createDate;
-        this.singerId = singerId;
+        this.singer = singer;
     }
 
     public Long getId() {
@@ -80,11 +81,11 @@ public class Song {
         this.createDate = createDate;
     }
 
-    public Long getSingerId() {
-        return singerId;
+    public Singer getSinger() {
+        return singer;
     }
 
-    public void setSingerId(Long singerId) {
-        this.singerId = singerId;
+    public void setSinger(Singer singer) {
+        this.singer = singer;
     }
 }

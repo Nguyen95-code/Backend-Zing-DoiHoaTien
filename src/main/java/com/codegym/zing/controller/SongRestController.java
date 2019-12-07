@@ -23,41 +23,38 @@ public class SongRestController {
     private static SingerService singerService;
 
     @GetMapping("/songs")
-    public ResponseEntity<List<Song>> listSong(){
-        List<Song> songs = (List<Song>) songService.findAll();
-        return new ResponseEntity<List<Song>>(songs, HttpStatus.OK);
+    public ResponseEntity<List<Song>> listSong() {
+        List<Song> songs = songService.findAll();
+        return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
     @PostMapping("/songs")
-    public ResponseEntity<Void> createSong(@RequestBody Song song){
+    public ResponseEntity<Void> createSong(@RequestBody Song song) {
         songService.save(song);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/songs/{id}")
-    public ResponseEntity<Song> searchSongById(@PathVariable Long id){
+    public ResponseEntity<Song> searchSongById(@PathVariable Long id) {
         Song song = songService.findById(id);
-        if (song.equals(null)){
+        if (song == null) {
             return new ResponseEntity<Song>(HttpStatus.NOT_FOUND);
         }
-        Singer singer = singerService.findById(song.getSingerId());
-        Set<Song> myList = singer.getMyList();
-        myList.add(song);
-        singer.setMyList(myList);
         return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
 
     @DeleteMapping("/songs/{id}")
-    public ResponseEntity<Void> deleteSong(@PathVariable Long id){
+    public ResponseEntity<Void> deleteSong(@PathVariable Long id) {
         Song song = songService.findById(id);
-        if (song.equals(null)) {
+        if (song == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        else return new ResponseEntity<>(HttpStatus.OK);
+        songService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/songs/new")
-    public ResponseEntity<List<Song>> songNew(){
+    public ResponseEntity<List<Song>> songNew() {
         List<Song> songs = (List<Song>) songService.findOrOrderByCreateDate();
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }

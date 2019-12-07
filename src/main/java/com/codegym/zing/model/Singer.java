@@ -1,7 +1,7 @@
 package com.codegym.zing.model;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "singer")
@@ -13,16 +13,18 @@ public class Singer {
     private String image;
 
     @OneToMany(targetEntity = Song.class)
-    private Set<Song> myList;
+    private List<Song> myList;
     @OneToMany(targetEntity = Song.class)
-    private Set<Song> playlist;
+    private List<Song> playlist;
 
     public Singer() {
     }
 
-    public Singer(String name, String image) {
+    public Singer(String name, String image, List<Song> myList, List<Song> playlist) {
         this.name = name;
         this.image = image;
+        this.myList = myList;
+        this.playlist = playlist;
     }
 
     public Long getId() {
@@ -49,19 +51,19 @@ public class Singer {
         this.image = image;
     }
 
-    public Set<Song> getMyList() {
+    public List<Song> getMyList() {
         return myList;
     }
 
-    public void setMyList(Set<Song> myList) {
+    public void setMyList(List<Song> myList) {
         this.myList = myList;
     }
 
-    public Set<Song> getPlaylist() {
+    public List<Song> getPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(Set<Song> playlist) {
+    public void setPlaylist(List<Song> playlist) {
         this.playlist = playlist;
     }
 }
