@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class SongRestController {
 
     @PostMapping("/songs")
     public ResponseEntity<Void> createSong(@RequestBody Song song) {
+        song.setCreateDate(LocalDate.now());
         songService.save(song);
         return new ResponseEntity<>(HttpStatus.OK);
     }
