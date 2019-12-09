@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api")
 public class SongRestController {
     @Autowired
