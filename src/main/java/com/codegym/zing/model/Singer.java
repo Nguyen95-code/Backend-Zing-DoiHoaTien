@@ -12,19 +12,33 @@ public class Singer {
     private String name;
     private String image;
 
+    private String address;
+    private String identityCard;
+    private String identityCardImage;
+    private String company;
+
     @OneToMany(targetEntity = Song.class)
     private List<Song> myList;
-    @OneToMany(targetEntity = Song.class)
-    private List<Song> playlist;
+
+    @OneToMany(targetEntity = Playlist.class)
+    private List<Playlist> playlist;
+
+    @OneToMany(targetEntity = Album.class)
+    private List<Album> albumList;
 
     public Singer() {
     }
 
-    public Singer(String name, String image, List<Song> myList, List<Song> playlist) {
+    public Singer(String name, String image, String address, String identityCard, String identityCardImage, String company, List<Song> myList, List<Playlist> playlist, List<Album> albumList) {
         this.name = name;
         this.image = image;
+        this.address = address;
+        this.identityCard = identityCard;
+        this.identityCardImage = identityCardImage;
+        this.company = company;
         this.myList = myList;
         this.playlist = playlist;
+        this.albumList = albumList;
     }
 
     public Long getId() {
@@ -59,11 +73,51 @@ public class Singer {
         this.myList = myList;
     }
 
-    public List<Song> getPlaylist() {
+    public List<Playlist> getPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(List<Song> playlist) {
+    public void setPlaylist(List<Playlist> playlist) {
         this.playlist = playlist;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getIdentityCard() {
+        return identityCard;
+    }
+
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard;
+    }
+
+    public String getIdentityCardImage() {
+        return identityCardImage;
+    }
+
+    public void setIdentityCardImage(String identityCardImage) {
+        this.identityCardImage = identityCardImage;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public List<Album> getAlbumList() {
+        return albumList;
+    }
+
+    public void setAlbumList(List<Album> albumList) {
+        this.albumList = albumList;
     }
 }
