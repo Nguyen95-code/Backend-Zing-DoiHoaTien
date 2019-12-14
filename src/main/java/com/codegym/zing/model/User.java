@@ -12,10 +12,13 @@ public class User {
     private String name;
     private String image;
 
-    @OneToMany(targetEntity = Song.class)
-    private List<Song> playlist;
+    @OneToMany(targetEntity = Playlist.class)
+    private List<Playlist> playlist;
 
-    public User(String name, String image, List<Song> playlist) {
+    public User() {
+    }
+
+    public User(String name, String image, List<Playlist> playlist) {
         this.name = name;
         this.image = image;
         this.playlist = playlist;
@@ -45,11 +48,11 @@ public class User {
         this.image = image;
     }
 
-    public List<Song> getPlaylist() {
+    public List<Playlist> getPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(List<Song> playlist) {
+    public void setPlaylist(List<Playlist> playlist) {
         this.playlist = playlist;
     }
 }

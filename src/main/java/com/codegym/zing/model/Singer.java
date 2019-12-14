@@ -19,13 +19,14 @@ public class Singer {
 
     @OneToMany(targetEntity = Song.class)
     private List<Song> myList;
-    @OneToMany(targetEntity = Song.class)
-    private List<Song> playlist;
+
+    @OneToMany(targetEntity = Playlist.class)
+    private List<Playlist> playlist;
 
     public Singer() {
     }
 
-    public Singer(String name, String image, String address, String identityCard, String identityCardImage, String company, List<Song> myList, List<Song> playlist) {
+    public Singer(String name, String image, String address, String identityCard, String identityCardImage, String company, List<Song> myList, List<Playlist> playlist) {
         this.name = name;
         this.image = image;
         this.address = address;
@@ -68,11 +69,11 @@ public class Singer {
         this.myList = myList;
     }
 
-    public List<Song> getPlaylist() {
+    public List<Playlist> getPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(List<Song> playlist) {
+    public void setPlaylist(List<Playlist> playlist) {
         this.playlist = playlist;
     }
 
