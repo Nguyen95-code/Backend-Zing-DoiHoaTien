@@ -23,10 +23,13 @@ public class Singer {
     @OneToMany(targetEntity = Playlist.class)
     private List<Playlist> playlist;
 
+    @OneToMany(targetEntity = Album.class)
+    private List<Album> albumList;
+
     public Singer() {
     }
 
-    public Singer(String name, String image, String address, String identityCard, String identityCardImage, String company, List<Song> myList, List<Playlist> playlist) {
+    public Singer(String name, String image, String address, String identityCard, String identityCardImage, String company, List<Song> myList, List<Playlist> playlist, List<Album> albumList) {
         this.name = name;
         this.image = image;
         this.address = address;
@@ -35,6 +38,7 @@ public class Singer {
         this.company = company;
         this.myList = myList;
         this.playlist = playlist;
+        this.albumList = albumList;
     }
 
     public Long getId() {
@@ -107,5 +111,13 @@ public class Singer {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public List<Album> getAlbumList() {
+        return albumList;
+    }
+
+    public void setAlbumList(List<Album> albumList) {
+        this.albumList = albumList;
     }
 }
