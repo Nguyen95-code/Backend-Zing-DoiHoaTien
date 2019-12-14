@@ -12,6 +12,11 @@ public class Singer {
     private String name;
     private String image;
 
+    private String address;
+    private String identityCard;
+    private String identityCardImage;
+    private String company;
+
     @OneToMany(targetEntity = Song.class)
     private List<Song> myList;
     @OneToMany(targetEntity = Song.class)
@@ -20,9 +25,13 @@ public class Singer {
     public Singer() {
     }
 
-    public Singer(String name, String image, List<Song> myList, List<Song> playlist) {
+    public Singer(String name, String image, String address, String identityCard, String identityCardImage, String company, List<Song> myList, List<Song> playlist) {
         this.name = name;
         this.image = image;
+        this.address = address;
+        this.identityCard = identityCard;
+        this.identityCardImage = identityCardImage;
+        this.company = company;
         this.myList = myList;
         this.playlist = playlist;
     }
@@ -65,5 +74,37 @@ public class Singer {
 
     public void setPlaylist(List<Song> playlist) {
         this.playlist = playlist;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getIdentityCard() {
+        return identityCard;
+    }
+
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard;
+    }
+
+    public String getIdentityCardImage() {
+        return identityCardImage;
+    }
+
+    public void setIdentityCardImage(String identityCardImage) {
+        this.identityCardImage = identityCardImage;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }
