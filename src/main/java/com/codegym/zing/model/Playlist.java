@@ -10,6 +10,7 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String image;
 
     @OneToMany(targetEntity = Song.class)
     private List<Song> songList;
@@ -25,8 +26,9 @@ public class Playlist {
     public Playlist() {
     }
 
-    public Playlist(String name, List<Song> songList, User user, Singer singer) {
+    public Playlist(String name, String image, List<Song> songList, User user, Singer singer) {
         this.name = name;
+        this.image = image;
         this.songList = songList;
         this.user = user;
         this.singer = singer;
@@ -70,5 +72,13 @@ public class Playlist {
 
     public void setSinger(Singer singer) {
         this.singer = singer;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
