@@ -3,17 +3,23 @@ package com.codegym.zing.service.impl;
 import com.codegym.zing.model.Playlist;
 import com.codegym.zing.model.Song;
 import com.codegym.zing.repository.PlaylistRepository;
+import com.codegym.zing.repository.SongRepository;
 import com.codegym.zing.service.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PlaylistServiceImpl implements PlaylistService {
     @Autowired
     private PlaylistRepository playlistRepository;
+    @Autowired
+    private SongRepository songRepository;
 
     @Override
     public List<Playlist> findAll() {
@@ -41,4 +47,31 @@ public class PlaylistServiceImpl implements PlaylistService {
             playlistRepository.delete(playlist.get());
         }
     }
+
+    @Override
+    public void addSong(Long playlistId, Song song) {
+        Optional<Playlist> playlist = playlistRepository.findById(playlistId);
+        if (playlist.isPresent()) {
+            Set<Song> songs = playlist.get().getSongList();
+            songs.add(song);
+            playlist.get().setSongList(songs);
+            playlistRepository.save(playlist.get());
+        }
+    }
+
+    @Override
+    public void deleteSong(Long playlistId, Long songId) {
+        Optional<Playlist> playlist = playlistRepository.findById(playlistId);
+        if (playlist.isPresent()) {
+            Set<Song> songs = playlist.get().getSongList();
+            Optional<Song> song = songRepository.findById(songId);
+            if (song.isPresent()) {
+                songs.remove(song.get());
+                playlist.get().setSongList(songs);
+                playlistRepository.save(playlist.get());
+            }
+        }
+    }
+
+
 }
