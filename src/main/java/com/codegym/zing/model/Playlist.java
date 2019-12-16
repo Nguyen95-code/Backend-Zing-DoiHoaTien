@@ -31,6 +31,15 @@ public class Playlist {
     public Playlist() {
     }
 
+    public Playlist(Long id, String name, String image, Set<Song> songList, User user, Singer singer) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.songList = songList;
+        this.user = user;
+        this.singer = singer;
+    }
+
     public Playlist(String name, String image, Set<Song> songList, User user, Singer singer) {
         this.name = name;
         this.image = image;
