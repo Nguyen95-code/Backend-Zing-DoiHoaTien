@@ -1,7 +1,9 @@
 package com.codegym.zing.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "playlist")
@@ -12,8 +14,11 @@ public class Playlist {
     private String name;
     private String image;
 
-    @OneToMany(targetEntity = Song.class)
-    private List<Song> songList;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "playlist_song",
+            joinColumns = {@JoinColumn(name = "playlist_id")},
+            inverseJoinColumns = {@JoinColumn(name = "song_id")})
+    private Set<Song> songList = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "person_id")
@@ -26,7 +31,16 @@ public class Playlist {
     public Playlist() {
     }
 
-    public Playlist(String name, String image, List<Song> songList, User user, Singer singer) {
+    public Playlist(Long id, String name, String image, Set<Song> songList, User user, Singer singer) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.songList = songList;
+        this.user = user;
+        this.singer = singer;
+    }
+
+    public Playlist(String name, String image, Set<Song> songList, User user, Singer singer) {
         this.name = name;
         this.image = image;
         this.songList = songList;
@@ -50,11 +64,11 @@ public class Playlist {
         this.name = name;
     }
 
-    public List<Song> getSongList() {
+    public Set<Song> getSongList() {
         return songList;
     }
 
-    public void setSongList(List<Song> songList) {
+    public void setSongList(Set<Song> songList) {
         this.songList = songList;
     }
 

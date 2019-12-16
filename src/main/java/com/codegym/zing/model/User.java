@@ -1,7 +1,10 @@
 package com.codegym.zing.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "person")
@@ -13,12 +16,12 @@ public class User {
     private String image;
 
     @OneToMany(targetEntity = Playlist.class)
-    private List<Playlist> playlist;
+    private Set<Playlist> playlist = new HashSet<>();
 
     public User() {
     }
 
-    public User(String name, String image, List<Playlist> playlist) {
+    public User(String name, String image, Set<Playlist> playlist) {
         this.name = name;
         this.image = image;
         this.playlist = playlist;
@@ -48,11 +51,11 @@ public class User {
         this.image = image;
     }
 
-    public List<Playlist> getPlaylist() {
+    public Set<Playlist> getPlaylist() {
         return playlist;
     }
 
-    public void setPlaylist(List<Playlist> playlist) {
+    public void setPlaylist(Set<Playlist> playlist) {
         this.playlist = playlist;
     }
 }
