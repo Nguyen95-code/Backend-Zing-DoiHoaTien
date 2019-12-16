@@ -1,5 +1,6 @@
 package com.codegym.zing.service.impl;
 
+import com.codegym.zing.model.Singer;
 import com.codegym.zing.model.Song;
 import com.codegym.zing.repository.SongRepository;
 import com.codegym.zing.service.SongService;
@@ -44,5 +45,10 @@ public class SongServiceImpl implements SongService {
     @Override
     public Iterable<Song> findOrOrderByCreateDate() {
         return songRepository.findOrOrderByCreateDate();
+    }
+
+    @Override
+    public List<Song> findAllBySinger(Singer singer) {
+        return songRepository.findAllBySinger(singer);
     }
 }

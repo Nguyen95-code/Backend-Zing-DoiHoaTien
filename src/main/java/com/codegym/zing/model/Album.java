@@ -28,6 +28,15 @@ public class Album {
     public Album() {
     }
 
+    public Album(Long id, String name, String image, Set<Song> songList, Singer singer) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.songList = songList;
+        this.singer = singer;
+    }
+
+
     public Album(String name, String image, Set<Song> songList, Singer singer) {
         this.name = name;
         this.image = image;

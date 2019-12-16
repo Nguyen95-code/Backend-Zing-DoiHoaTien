@@ -62,10 +62,7 @@ public class PlaylistRestController {
         if (playlist == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Set<Song> songs = playlist.getSongList();
-        songs.add(song);
-        playlist.setSongList(songs);
-        playlistService.save(playlist);
+        playlistService.addSong(playlistId, song.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -75,11 +72,7 @@ public class PlaylistRestController {
         if (playlist == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Set<Song> songs = playlist.getSongList();
-        Song song = songService.findById(songId);
-        songs.remove(song);
-        playlist.setSongList(songs);
-        playlistService.save(playlist);
+        playlistService.deleteSong(playlistId, songId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
