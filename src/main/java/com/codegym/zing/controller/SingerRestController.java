@@ -7,6 +7,7 @@ import com.codegym.zing.model.Song;
 import com.codegym.zing.service.AlbumService;
 import com.codegym.zing.service.PlaylistService;
 import com.codegym.zing.service.SingerService;
+import com.codegym.zing.service.SongService;
 import com.fasterxml.jackson.databind.node.BaseJsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,8 @@ public class SingerRestController {
     private AlbumService albumService;
     @Autowired
     private PlaylistService playlistService;
+    @Autowired
+    private SongService songService;
 
     @GetMapping("/singers")
     public ResponseEntity<List<Singer>> listSong() {
@@ -67,5 +70,13 @@ public class SingerRestController {
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
-
+    @GetMapping("/singers/{id}/songs")
+    public ResponseEntity<List<Song>> findAllSong(@PathVariable Long id){
+        Singer singer = singerService.findById(id);
+        if (singer == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Song> songs = songService.findAllBySinger(singer);
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
 }
