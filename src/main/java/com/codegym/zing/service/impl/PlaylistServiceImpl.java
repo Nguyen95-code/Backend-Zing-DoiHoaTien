@@ -1,7 +1,9 @@
 package com.codegym.zing.service.impl;
 
 import com.codegym.zing.model.Playlist;
+import com.codegym.zing.model.Singer;
 import com.codegym.zing.model.Song;
+import com.codegym.zing.model.User;
 import com.codegym.zing.repository.PlaylistRepository;
 import com.codegym.zing.repository.SongRepository;
 import com.codegym.zing.service.PlaylistService;
@@ -74,6 +76,16 @@ public class PlaylistServiceImpl implements PlaylistService {
                 playlistRepository.save(playlist.get());
             }
         }
+    }
+
+    @Override
+    public List<Playlist> findAllBySinger(Singer singer) {
+        return playlistRepository.findAllBySinger(singer);
+    }
+
+    @Override
+    public List<Playlist> findAllByUser(User user) {
+        return playlistRepository.findAllByUser(user);
     }
 
 

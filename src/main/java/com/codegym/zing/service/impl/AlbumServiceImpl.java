@@ -1,6 +1,7 @@
 package com.codegym.zing.service.impl;
 
 import com.codegym.zing.model.Album;
+import com.codegym.zing.model.Singer;
 import com.codegym.zing.model.Song;
 import com.codegym.zing.repository.AlbumRepository;
 import com.codegym.zing.repository.SongRepository;
@@ -33,7 +34,9 @@ public class AlbumServiceImpl implements AlbumService {
             Set<Song> songs = album.get().getSongList();
             Optional<Song> song = songRepository.findById(songId);
             if (song.isPresent()) {
+
                 songs.add(song.get());
+
                 album.get().setSongList(songs);
                 albumRepository.save(album.get());
             }
@@ -44,14 +47,21 @@ public class AlbumServiceImpl implements AlbumService {
     public void deleteSong(Long albumId, Long songId) {
         Optional<Album> album = albumRepository.findById(albumId);
         if (album.isPresent()){
+            Set<Song> songs = album.get().getSongList();
             Optional<Song> song = songRepository.findById(songId);
-            if (song.isPresent()){
-                Set<Song> songs = album.get().getSongList();
-                songs.remove(song);
+            if (song.isPresent()) {
+
+                songs.remove(song.get());
+
                 album.get().setSongList(songs);
                 albumRepository.save(album.get());
             }
         }
+    }
+
+    @Override
+    public List<Album> findAllBySinger(Singer singer) {
+        return albumRepository.findAllBySinger(singer);
     }
 
     @Override
@@ -72,4 +82,6 @@ public class AlbumServiceImpl implements AlbumService {
         }
         return null;
     }
+
+
 }
