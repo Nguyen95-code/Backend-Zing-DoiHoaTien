@@ -1,19 +1,24 @@
 package com.codegym.zing.controller;
 
 import com.codegym.zing.model.Playlist;
+import com.codegym.zing.model.Song;
 import com.codegym.zing.service.PlaylistService;
+import com.codegym.zing.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
 public class PlaylistRestController {
     @Autowired
     private PlaylistService playlistService;
+    @Autowired
+    private SongService songService;
     @GetMapping("/playlists")
     public ResponseEntity<List<Playlist>> findAll(){
         List<Playlist> playlists = playlistService.findAll();
@@ -49,5 +54,41 @@ public class PlaylistRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(playlist, HttpStatus.OK);
+    }
+
+    @PostMapping("/playlists/{playlistId}")
+    public ResponseEntity<Void> addSong(@PathVariable Long playlistId, @RequestBody Song song){
+        Playlist playlist = playlistService.findById(playlistId);
+        if (playlist == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Set<Song> songs = playlist.getSongList();
+        songs.add(song);
+        playlist.setSongList(songs);
+        playlistService.save(playlist);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/playlists/{playlistId}/{songId}")
+    public ResponseEntity<Void> deleteSong(@PathVariable("playlistId") Long playlistId, @PathVariable("songId") Long songId){
+        Playlist playlist = playlistService.findById(playlistId);
+        if (playlist == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Set<Song> songs = playlist.getSongList();
+        Song song = songService.findById(songId);
+        songs.remove(song);
+        playlist.setSongList(songs);
+        playlistService.save(playlist);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/playlists/{playlistId}/songs")
+    public ResponseEntity<Set<Song>> findAllSongs(@PathVariable Long playlistId){
+        Playlist playlist = playlistService.findById(playlistId);
+        if (playlist == null){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(playlist.getSongList(), HttpStatus.OK);
     }
 }
