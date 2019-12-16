@@ -1,7 +1,10 @@
 package com.codegym.zing.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "singer")
@@ -18,18 +21,18 @@ public class Singer {
     private String company;
 
     @OneToMany(targetEntity = Song.class)
-    private List<Song> myList;
+    private Set<Song> myList = new HashSet<>();
 
     @OneToMany(targetEntity = Playlist.class)
-    private List<Playlist> playlist;
+    private Set<Playlist> playlist = new HashSet<>();
 
     @OneToMany(targetEntity = Album.class)
-    private List<Album> albumList;
+    private Set<Album> albumList = new HashSet<>();
 
     public Singer() {
     }
 
-    public Singer(String name, String image, String address, String identityCard, String identityCardImage, String company, List<Song> myList, List<Playlist> playlist, List<Album> albumList) {
+    public Singer(String name, String image, String address, String identityCard, String identityCardImage, String company, Set<Song> myList, Set<Playlist> playlist, Set<Album> albumList) {
         this.name = name;
         this.image = image;
         this.address = address;
@@ -65,22 +68,6 @@ public class Singer {
         this.image = image;
     }
 
-    public List<Song> getMyList() {
-        return myList;
-    }
-
-    public void setMyList(List<Song> myList) {
-        this.myList = myList;
-    }
-
-    public List<Playlist> getPlaylist() {
-        return playlist;
-    }
-
-    public void setPlaylist(List<Playlist> playlist) {
-        this.playlist = playlist;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -113,11 +100,27 @@ public class Singer {
         this.company = company;
     }
 
-    public List<Album> getAlbumList() {
+    public Set<Song> getMyList() {
+        return myList;
+    }
+
+    public void setMyList(Set<Song> myList) {
+        this.myList = myList;
+    }
+
+    public Set<Playlist> getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(Set<Playlist> playlist) {
+        this.playlist = playlist;
+    }
+
+    public Set<Album> getAlbumList() {
         return albumList;
     }
 
-    public void setAlbumList(List<Album> albumList) {
+    public void setAlbumList(Set<Album> albumList) {
         this.albumList = albumList;
     }
 }

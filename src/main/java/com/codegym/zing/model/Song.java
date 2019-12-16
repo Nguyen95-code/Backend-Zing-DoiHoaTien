@@ -4,6 +4,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "song")
@@ -21,16 +25,24 @@ public class Song {
     @JoinColumn(name = "singerId")
     private Singer singer;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Playlist> playlist = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Album> album = new HashSet<>();
+
     public Song() {
     }
 
-    public Song(String name, String link, String image, String description, LocalDate createDate, Singer singer) {
+    public Song(String name, String link, String image, String description, LocalDate createDate, Singer singer, Set<Playlist> playlist, Set<Album> album) {
         this.name = name;
         this.link = link;
         this.image = image;
         this.description = description;
         this.createDate = createDate;
         this.singer = singer;
+        this.playlist = playlist;
+        this.album = album;
     }
 
     public Long getId() {
@@ -87,5 +99,21 @@ public class Song {
 
     public void setSinger(Singer singer) {
         this.singer = singer;
+    }
+
+    public Set<Playlist> getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(Set<Playlist> playlist) {
+        this.playlist = playlist;
+    }
+
+    public Set<Album> getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Set<Album> album) {
+        this.album = album;
     }
 }
