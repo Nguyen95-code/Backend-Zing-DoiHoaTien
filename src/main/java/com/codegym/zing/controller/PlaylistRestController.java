@@ -62,7 +62,7 @@ public class PlaylistRestController {
         if (playlist == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        playlistService.addSong(playlistId, song);
+        playlistService.addSong(playlistId, song.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

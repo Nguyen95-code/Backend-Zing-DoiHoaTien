@@ -27,13 +27,16 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public void addSong(Long albumId, Song song) {
+    public void addSong(Long albumId, Long songId) {
         Optional<Album> album = albumRepository.findById(albumId);
         if (album.isPresent()){
             Set<Song> songs = album.get().getSongList();
-            songs.add(song);
-            album.get().setSongList(songs);
-            albumRepository.save(album.get());
+            Optional<Song> song = songRepository.findById(songId);
+            if (song.isPresent()) {
+                songs.add(song.get());
+                album.get().setSongList(songs);
+                albumRepository.save(album.get());
+            }
         }
     }
 

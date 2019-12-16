@@ -49,13 +49,16 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public void addSong(Long playlistId, Song song) {
+    public void addSong(Long playlistId, Long songId) {
         Optional<Playlist> playlist = playlistRepository.findById(playlistId);
         if (playlist.isPresent()) {
             Set<Song> songs = playlist.get().getSongList();
-            songs.add(song);
-            playlist.get().setSongList(songs);
-            playlistRepository.save(playlist.get());
+            Optional<Song> song = songRepository.findById(songId);
+            if (song.isPresent()) {
+                songs.add(song.get());
+                playlist.get().setSongList(songs);
+                playlistRepository.save(playlist.get());
+            }
         }
     }
 
