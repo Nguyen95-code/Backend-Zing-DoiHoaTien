@@ -5,10 +5,7 @@ import com.codegym.zing.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,4 +21,25 @@ public class AlbumRestController {
         return new ResponseEntity<>(albums, HttpStatus.OK);
     }
 
+    @PostMapping("/albums")
+    public ResponseEntity<Void> save(@RequestBody Album album){
+        albumService.save(album);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/albums")
+    public ResponseEntity<Void> edit(@RequestBody Album album){
+        albumService.save(album);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/albums/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        Album album = albumService.findById(id);
+        if (album == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        albumService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
