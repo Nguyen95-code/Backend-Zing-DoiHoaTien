@@ -2,9 +2,7 @@ package com.codegym.zing.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,6 +14,8 @@ public class Song {
     private String name;
     private String link;
     private String image;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
     private LocalDate createDate;
 
