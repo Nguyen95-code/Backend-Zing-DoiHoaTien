@@ -1,6 +1,6 @@
 package com.codegym.zing.model;
 
-import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,6 +18,8 @@ public class Song {
     private String name;
     private String link;
     private String image;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
     private LocalDate createDate;
 
