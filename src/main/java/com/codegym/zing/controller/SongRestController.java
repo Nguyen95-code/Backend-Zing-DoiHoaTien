@@ -31,10 +31,10 @@ public class SongRestController {
     }
 
     @PostMapping("/songs")
-    public ResponseEntity<Void> createSong(@RequestBody Song song) {
+    public ResponseEntity<Song> createSong(@RequestBody Song song) {
         song.setCreateDate(LocalDate.now());
         songService.save(song);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
 
     @GetMapping("/songs/{id}")
