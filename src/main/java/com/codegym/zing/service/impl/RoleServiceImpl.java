@@ -20,4 +20,9 @@ public class RoleServiceImpl implements RoleService {
     public Iterable<Role> findAll() {
         return roleRepository.findAll();
     }
+
+    @Override
+    public void save(Role role) {
+        roleRepository.save(role);
+    }
 }

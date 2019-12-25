@@ -14,4 +14,7 @@ public interface UserService extends GeneralService<User>, UserDetailsService {
     boolean checkLogin(User user);
 
     boolean isRegister(User user);
+
+    boolean isCorrectConfirmPassword(User user);
+
 }

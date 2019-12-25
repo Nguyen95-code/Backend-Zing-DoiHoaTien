@@ -1,9 +1,7 @@
 package com.codegym.zing.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,6 +19,10 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String confirmPassword;
+
     @OneToMany(targetEntity = Playlist.class)
     private Set<Playlist> playlist = new HashSet<>();
 
@@ -32,15 +34,15 @@ public class User {
     public User() {
     }
 
-    public User(String name, String image, String username, String password, Set<Playlist> playlist, Set<Role> roles) {
+    public User(String name, String image, String username, String password, String confirmPassword, Set<Playlist> playlist, Set<Role> roles) {
         this.name = name;
         this.image = image;
         this.username = username;
         this.password = password;
+        this.confirmPassword = confirmPassword;
         this.playlist = playlist;
         this.roles = roles;
     }
-
 
     public Long getId() {
         return id;
@@ -96,5 +98,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

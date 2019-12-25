@@ -1,23 +1,31 @@
 package com.codegym.zing.controller;
 
-import com.codegym.zing.model.Playlist;
-import com.codegym.zing.model.Role;
-import com.codegym.zing.model.User;
+import com.codegym.zing.model.*;
 import com.codegym.zing.service.PlaylistService;
 import com.codegym.zing.service.RoleService;
 import com.codegym.zing.service.UserService;
+import com.codegym.zing.service.VerificationTokenService;
 import com.codegym.zing.service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import static com.codegym.zing.model.StaticVariable.ROLE_USER;
 
 @RestController
 @CrossOrigin("*")
@@ -83,6 +91,9 @@ public class UserRestController {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        if (!userService.isCorrectConfirmPassword(user)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Iterable<User> users = userService.findAll();
         for (User currentUser : users) {
             if (currentUser.getUsername().equals(user.getUsername())) {
@@ -106,7 +117,6 @@ public class UserRestController {
         VerificationToken token = new VerificationToken(user);
         token.setExpiryDate(10);
         verificationTokenService.save(token);
-        emailService.sendEmail(user.getEmail(), SUBJECT_REGISTER, TEXT_REGISTER + env.getProperty("confirmAccountLink") + token.getToken());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
@@ -116,8 +126,7 @@ public class UserRestController {
         if (token != null) {
             boolean isExpired = token.isExpired();
             if (!isExpired) {
-                User user = userService.findByEmail(token.getUser().getEmail());
-                user.setEnabled(true);
+                User user = userService.findByUsername(token.getUser().getUsername());
                 userService.save(user);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
@@ -148,7 +157,7 @@ public class UserRestController {
         if (isExpired) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Optional<User> userOptional = userService.findById(id);
+        Optional<User> userOptional = Optional.ofNullable(userService.findById(id));
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
