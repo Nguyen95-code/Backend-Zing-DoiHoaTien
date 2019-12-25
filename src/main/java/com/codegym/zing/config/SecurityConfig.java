@@ -6,6 +6,7 @@ import com.codegym.zing.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,7 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserService userService() {
         return new UserServiceImpl();
     }
-
 
     @Autowired
     private UserService userService;
@@ -71,7 +71,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/",
                         LOGIN,
-                        "/register").permitAll()
+                        "/register",
+                        "/forgot-password",
+                        "/new-password/**").permitAll()
+                .antMatchers(HttpMethod.GET,
+                        "/songs/**",
+                        "/albums/**",
+                        "/singers/**"
+                       ).permitAll()
+                .antMatchers(HttpMethod.GET,
+                        "/users/**",
+                        "/userCurrent").access("hasAnyRole('ROLE_USER', 'ROLE_SINGER')")
+                .antMatchers(HttpMethod.POST,
+                        "/songs/**",
+                        "/albums/**",
+                        "/playlists/**",
+                        "/singers/**"
+                ).access("hasRole('ROLE_SINGER')")
+                .antMatchers(HttpMethod.PUT,
+                        "/songs/**",
+                        "/albums/**",
+                        "/playlists/**",
+                        "/singers/**"
+                ).access("hasRole('ROLE_SINGER')")
+                .antMatchers(HttpMethod.DELETE,
+                        "/songs/**",
+                        "/albums/**",
+                        "/playlists/**",
+                        "/singers/**"
+                ).access("hasRole('ROLE_SINGER')")
                 .anyRequest().authenticated()
                 .and().csrf()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));

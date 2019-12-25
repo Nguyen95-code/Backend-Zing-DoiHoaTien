@@ -1,12 +1,8 @@
 package com.codegym.zing.model;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,8 +20,8 @@ public class Song {
     private LocalDate createDate;
 
     @ManyToOne
-    @JoinColumn(name = "singerId")
-    private Singer singer;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Playlist> playlist = new HashSet<>();
@@ -36,13 +32,13 @@ public class Song {
     public Song() {
     }
 
-    public Song(String name, String link, String image, String description, LocalDate createDate, Singer singer, Set<Playlist> playlist, Set<Album> album) {
+    public Song(String name, String link, String image, String description, LocalDate createDate, User user, Set<Playlist> playlist, Set<Album> album) {
         this.name = name;
         this.link = link;
         this.image = image;
         this.description = description;
         this.createDate = createDate;
-        this.singer = singer;
+        this.user = user;
         this.playlist = playlist;
         this.album = album;
     }
@@ -95,12 +91,12 @@ public class Song {
         this.createDate = createDate;
     }
 
-    public Singer getSinger() {
-        return singer;
+    public User getUser() {
+        return user;
     }
 
-    public void setSinger(Singer singer) {
-        this.singer = singer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Playlist> getPlaylist() {

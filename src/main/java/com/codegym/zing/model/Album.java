@@ -1,9 +1,7 @@
 package com.codegym.zing.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,26 +20,17 @@ public class Album {
     private Set<Song> songList = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "singer_id")
-    private Singer singer;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Album() {
     }
 
-    public Album(Long id, String name, String image, Set<Song> songList, Singer singer) {
-        this.id = id;
+    public Album(String name, String image, Set<Song> songList, User user) {
         this.name = name;
         this.image = image;
         this.songList = songList;
-        this.singer = singer;
-    }
-
-
-    public Album(String name, String image, Set<Song> songList, Singer singer) {
-        this.name = name;
-        this.image = image;
-        this.songList = songList;
-        this.singer = singer;
+        this.user = user;
     }
 
     public Long getId() {
@@ -76,11 +65,11 @@ public class Album {
         this.songList = songList;
     }
 
-    public Singer getSinger() {
-        return singer;
+    public User getUser() {
+        return user;
     }
 
-    public void setSinger(Singer singer) {
-        this.singer = singer;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

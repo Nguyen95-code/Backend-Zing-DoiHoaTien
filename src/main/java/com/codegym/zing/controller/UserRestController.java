@@ -20,12 +20,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import static com.codegym.zing.model.StaticVariable.ROLE_USER;
 
 @RestController
 @CrossOrigin("*")
@@ -54,12 +51,6 @@ public class UserRestController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/users")
-    public ResponseEntity<Void> save(@RequestBody User user){
-        userService.save(user);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @GetMapping("/users/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id){
         User user = userService.findById(id);
@@ -79,10 +70,30 @@ public class UserRestController {
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<Iterable<User>> showAllUser() {
-        Iterable<User> users = userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    @GetMapping("/users/{userId}/playlists/{id}")
+    public ResponseEntity<Playlist> findById(@PathVariable Long userId, @PathVariable Long id){
+        User user = userService.findById(userId);
+        if (user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Playlist playlist = playlistService.findById(id);
+        if (playlist == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(playlist, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{userId}/playlists/{playlistId}/songs")
+    public ResponseEntity<Set<Song>> findAllSongs(@PathVariable Long userId, @PathVariable Long playlistId){
+        User user = userService.findById(userId);
+        if (user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Playlist playlist = playlistService.findById(playlistId);
+        if (playlist == null){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(playlist.getSongList(), HttpStatus.OK);
     }
 
     @PostMapping("/register")
@@ -93,23 +104,17 @@ public class UserRestController {
         if (!userService.isCorrectConfirmPassword(user)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        Role role = user.getRoles();
+        if (roleService.findRoleByName(role.getName()) == null){
+            roleService.save(role);
+        } else role = roleService.findRoleByName(role.getName());
+        user.setRoles(role);
         Iterable<User> users = userService.findAll();
         for (User currentUser : users) {
             if (currentUser.getUsername().equals(user.getUsername())) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
-        List<Role> roleList = (List<Role>) roleService.findAll();
-        if (roleList.isEmpty()) {
-            Role role = new Role();
-            role.setId(1L);
-            role.setName(ROLE_USER);
-            roleService.save(role);
-        }
-        Role role = roleService.findRoleByName(ROLE_USER);
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
         userService.save(user);
@@ -117,20 +122,6 @@ public class UserRestController {
         token.setExpiryDate(10);
         verificationTokenService.save(token);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
-
-    @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<Void> confirmUserAccount(@RequestParam("token") String verificationToken) {
-        VerificationToken token = verificationTokenService.findByToken(verificationToken);
-        if (token != null) {
-            boolean isExpired = token.isExpired();
-            if (!isExpired) {
-                User user = userService.findByUsername(token.getUser().getUsername());
-                userService.save(user);
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/login")
@@ -168,6 +159,12 @@ public class UserRestController {
         user.setPassword(newPassword);
         user.setConfirmPassword(confirmPassword);
         userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/userCurrent")
+    public ResponseEntity<User> userCurrent(){
+        User user = userService.getCurrentUser();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
