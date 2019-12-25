@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Set;
+
 @CrossOrigin("*")
 @RestController
 public class PlaylistRestController {
@@ -67,5 +70,29 @@ public class PlaylistRestController {
         }
         playlistService.deleteSong(playlistId, songId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/playlists")
+    public ResponseEntity<List<Playlist>> findAllPlaylist(){
+        List<Playlist> playlists = playlistService.findAllByUser(getUserCurent());
+        return new ResponseEntity<>(playlists, HttpStatus.OK);
+    }
+
+    @GetMapping("/playlists/{playlistId}")
+    public ResponseEntity<Playlist> findById(@PathVariable Long playlistId){
+        Playlist playlist = playlistService.findById(playlistId);
+        if (playlist == null || playlist.getUser().getId() != getUserCurent().getId()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(playlist, HttpStatus.OK);
+    }
+
+    @GetMapping("/playlists/{playlistId}/songs")
+    public ResponseEntity<Set<Song>> findAllSongs(@PathVariable Long playlistId){
+        Playlist playlist = playlistService.findById(playlistId);
+        if (playlist == null || playlist.getUser().getId() != getUserCurent().getId()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(playlist.getSongList(), HttpStatus.OK);
     }
 }

@@ -1,6 +1,9 @@
 package com.codegym.zing.controller;
 
-import com.codegym.zing.model.*;
+import com.codegym.zing.model.JwtResponse;
+import com.codegym.zing.model.Role;
+import com.codegym.zing.model.User;
+import com.codegym.zing.model.VerificationToken;
 import com.codegym.zing.service.PlaylistService;
 import com.codegym.zing.service.RoleService;
 import com.codegym.zing.service.UserService;
@@ -20,9 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -50,50 +51,20 @@ public class UserRestController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private Long playlistId;
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        User user = userService.findById(id);
+    @ModelAttribute("userCurent")
+    public User getUserCurent(){
+        return userService.getCurrentUser();
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User> findById(@PathVariable Long userId){
+        User user = userService.findById(userId);
         if (user == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    @GetMapping("/users/{id}/playlists")
-    public ResponseEntity<List<Playlist>> findAllPlaylist(@PathVariable Long id){
-        User user = userService.findById(id);
-        if (user == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        List<Playlist> playlists = playlistService.findAllByUser(user);
-        return new ResponseEntity<>(playlists, HttpStatus.OK);
-    }
-
-    @GetMapping("/users/{userId}/playlists/{id}")
-    public ResponseEntity<Playlist> findById(@PathVariable Long userId, @PathVariable Long id){
-        User user = userService.findById(userId);
-        if (user == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Playlist playlist = playlistService.findById(id);
-        if (playlist == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(playlist, HttpStatus.OK);
-    }
-
-    @GetMapping("/users/{userId}/playlists/{playlistId}/songs")
-    public ResponseEntity<Set<Song>> findAllSongs(@PathVariable Long userId, @PathVariable Long playlistId){
-        User user = userService.findById(userId);
-        if (user == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Playlist playlist = playlistService.findById(playlistId);
-        if (playlist == null){
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(playlist.getSongList(), HttpStatus.OK);
     }
 
     @PostMapping("/register")
