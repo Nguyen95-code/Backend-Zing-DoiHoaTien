@@ -29,7 +29,6 @@ import static com.codegym.zing.model.StaticVariable.ROLE_USER;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api")
 public class UserRestController {
     @Autowired
     private UserService userService;

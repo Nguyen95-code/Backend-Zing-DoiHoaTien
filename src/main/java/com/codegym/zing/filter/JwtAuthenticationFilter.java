@@ -1,7 +1,7 @@
 package com.codegym.zing.filter;
 
-import com.codegym.jwt.service.UserService;
-import com.codegym.jwt.service.impl.JwtService;
+import com.codegym.zing.service.UserService;
+import com.codegym.zing.service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

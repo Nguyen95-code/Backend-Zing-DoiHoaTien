@@ -1,14 +1,16 @@
 package com.codegym.zing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class VerificationToken {
+@Entity
+@Table(name = "verification_token")
+public class VerificationToken implements Serializable {
     private static final long serialVersionUID = 5926468583005150707L;
 
     @Id
@@ -36,7 +38,7 @@ public class VerificationToken {
         token = UUID.randomUUID().toString();
     }
 
-    public void setExpiryDate(int minutes) {
+    public void setExpiryDate(int minutes){
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, minutes);
         this.expiryDate = now.getTime();
