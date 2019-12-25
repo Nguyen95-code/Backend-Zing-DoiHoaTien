@@ -2,7 +2,6 @@ package com.codegym.zing.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,28 +23,14 @@ public class Playlist {
     @JoinColumn(name = "person_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "singer_id")
-    private Singer singer;
-
     public Playlist() {
     }
 
-    public Playlist(Long id, String name, String image, Set<Song> songList, User user, Singer singer) {
-        this.id = id;
+    public Playlist(String name, String image, Set<Song> songList, User user) {
         this.name = name;
         this.image = image;
         this.songList = songList;
         this.user = user;
-        this.singer = singer;
-    }
-
-    public Playlist(String name, String image, Set<Song> songList, User user, Singer singer) {
-        this.name = name;
-        this.image = image;
-        this.songList = songList;
-        this.user = user;
-        this.singer = singer;
     }
 
     public Long getId() {
@@ -64,6 +49,14 @@ public class Playlist {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Set<Song> getSongList() {
         return songList;
     }
@@ -78,21 +71,5 @@ public class Playlist {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Singer getSinger() {
-        return singer;
-    }
-
-    public void setSinger(Singer singer) {
-        this.singer = singer;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }

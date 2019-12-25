@@ -1,8 +1,8 @@
 package com.codegym.zing.service.impl;
 
 import com.codegym.zing.model.Album;
-import com.codegym.zing.model.Singer;
 import com.codegym.zing.model.Song;
+import com.codegym.zing.model.User;
 import com.codegym.zing.repository.AlbumRepository;
 import com.codegym.zing.repository.SongRepository;
 import com.codegym.zing.service.AlbumService;
@@ -60,8 +60,8 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public List<Album> findAllBySinger(Singer singer) {
-        return albumRepository.findAllBySinger(singer);
+    public List<Album> findAllBySinger(User user) {
+        return albumRepository.findAllByUser(user);
     }
 
     @Override
