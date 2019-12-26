@@ -106,5 +106,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+        http.cors();
     }
 }
