@@ -117,16 +117,8 @@ public class UserRestController {
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
-    @RequestMapping(value = "/new-password/{id}", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<User> updatePassword(@RequestParam("token") String token, @PathVariable Long id, @RequestBody User user) {
-        VerificationToken verificationToken = verificationTokenService.findByToken(token);
-        boolean isExpired = verificationToken.isExpired();
-        if (token == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (isExpired) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @RequestMapping(value = "/new-password/{id}", method = {RequestMethod.POST})
+    public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody User user) {
         Optional<User> userOptional = Optional.ofNullable(userService.findById(id));
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
