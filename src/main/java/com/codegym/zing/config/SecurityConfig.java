@@ -72,8 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/",
                         LOGIN,
                         "/register",
-                        "/forgot-password",
-                        "/new-password/**").permitAll()
+                        "/forgot-password").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/songs/**",
                         "/albums/**",
@@ -82,9 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,
                         "/users/**",
                         "/userCurrent",
-                        "/playlists/**").access("hasAnyRole('ROLE_USER', 'ROLE_SINGER')")
+                        "/playlists/**",
+                        "/new-password/**").access("hasAnyRole('ROLE_USER', 'ROLE_SINGER')")
                 .antMatchers(HttpMethod.POST,
-                             "/playlists/**").access("hasAnyRole('ROLE_USER', 'ROLE_SINGER')")
+                             "/playlists/**",
+                        "/new-password/**").access("hasAnyRole('ROLE_USER', 'ROLE_SINGER')")
                 .antMatchers(HttpMethod.POST,
                         "/songs/**",
                         "/albums/**",
