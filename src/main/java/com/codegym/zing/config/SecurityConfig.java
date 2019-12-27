@@ -102,8 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/albums/**",
                         "/playlists/**",
                         "/singers/**"
-                ).access("hasRole('ROLE_SINGER')")
-                .anyRequest().authenticated()
+                ).access("hasRole('ROLE_SINGER')")                
                 .and().csrf()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
