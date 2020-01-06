@@ -36,6 +36,7 @@ public class SongRestController {
     public ResponseEntity<Song> createSong(@RequestBody Song song) {
         song.setCreateDate(LocalDate.now());
         song.setUser(getUserCurent());
+        song.setViews(0);
         songService.save(song);
         return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
@@ -46,6 +47,8 @@ public class SongRestController {
         if (song == null) {
             return new ResponseEntity<Song>(HttpStatus.NOT_FOUND);
         }
+        song.setViews(song.getViews() + 1);
+        songService.save(song);
         return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
 

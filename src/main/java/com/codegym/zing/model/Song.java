@@ -14,7 +14,7 @@ public class Song {
     private String name;
     private String link;
     private String image;
-    private Long views;
+    private long views;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -33,7 +33,7 @@ public class Song {
     public Song() {
     }
 
-    public Song(String name, String link, String image, String description, Long views, LocalDate createDate, User user, Set<Playlist> playlist, Set<Album> album) {
+    public Song(String name, String link, String image, String description, long views, LocalDate createDate, User user, Set<Playlist> playlist, Set<Album> album) {
         this.name = name;
         this.link = link;
         this.image = image;
@@ -45,11 +45,11 @@ public class Song {
         this.album = album;
     }
 
-    public Long getViews() {
+    public long getViews() {
         return views;
     }
 
-    public void setViews(Long views) {
+    public void setViews(long views) {
         this.views = views;
     }
 
