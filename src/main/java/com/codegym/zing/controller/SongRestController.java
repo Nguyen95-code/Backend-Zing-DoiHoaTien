@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -50,6 +51,12 @@ public class SongRestController {
         song.setViews(song.getViews() + 1);
         songService.save(song);
         return new ResponseEntity<Song>(song, HttpStatus.OK);
+    }
+
+    @PutMapping("/songs")
+    public ResponseEntity<Song> updateSong(@RequestBody Song song){
+        songService.save(song);
+        return new ResponseEntity<>(song, HttpStatus.OK);
     }
 
     @DeleteMapping("/songs/{id}")
