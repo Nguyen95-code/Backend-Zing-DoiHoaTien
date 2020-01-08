@@ -48,8 +48,6 @@ public class SongRestController {
         if (song == null) {
             return new ResponseEntity<Song>(HttpStatus.NOT_FOUND);
         }
-        song.setViews(song.getViews() + 1);
-        songService.save(song);
         return new ResponseEntity<Song>(song, HttpStatus.OK);
     }
 
