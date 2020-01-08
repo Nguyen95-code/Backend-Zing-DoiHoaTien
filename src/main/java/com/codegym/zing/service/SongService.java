@@ -9,4 +9,6 @@ public interface SongService extends GeneralService<Song>{
     void delete(Long id);
     Iterable<Song> findOrOrderByCreateDate();
     List<Song> findAllBySinger(User user);
+    Iterable<Song> findOrOrderByViews();
+
 }

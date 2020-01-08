@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface SongRepository extends JpaRepository<Song, Long> {
     @Query("select s from Song s order by s.createDate desc")
-    Iterable<Song> findOrOrderByCreateDate();
+    Iterable<Song> findOrderByCreateDate();
     List<Song> findAllByUser(User user);
+    @Query("select s from Song s order by s.views desc")
+    Iterable<Song> findOrderByViews();
 }

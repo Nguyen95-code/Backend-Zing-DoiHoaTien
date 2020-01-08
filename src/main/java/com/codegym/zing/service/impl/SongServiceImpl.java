@@ -43,8 +43,12 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    public Iterable<Song> findOrOrderByViews(){
+        return songRepository.findOrderByViews();
+    }
+    @Override
     public Iterable<Song> findOrOrderByCreateDate() {
-        return songRepository.findOrOrderByCreateDate();
+        return songRepository.findOrderByCreateDate();
     }
 
     @Override

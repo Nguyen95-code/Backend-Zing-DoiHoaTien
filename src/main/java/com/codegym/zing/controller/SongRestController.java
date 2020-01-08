@@ -23,7 +23,7 @@ public class SongRestController {
     private UserService userService;
 
     @ModelAttribute("userCurent")
-    public User getUserCurent(){
+    public User getUserCurent() {
         return userService.getCurrentUser();
     }
 
@@ -52,7 +52,7 @@ public class SongRestController {
     }
 
     @PutMapping("/songs")
-    public ResponseEntity<Song> updateSong(@RequestBody Song song){
+    public ResponseEntity<Song> updateSong(@RequestBody Song song) {
         songService.save(song);
         return new ResponseEntity<>(song, HttpStatus.OK);
     }
@@ -72,4 +72,11 @@ public class SongRestController {
         List<Song> songs = (List<Song>) songService.findOrOrderByCreateDate();
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
+
+    @GetMapping("/songs/views")
+    public ResponseEntity<List<Song>> songTopViews() {
+        List<Song> songs = (List<Song>) songService.findOrOrderByViews();
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
+
 }
