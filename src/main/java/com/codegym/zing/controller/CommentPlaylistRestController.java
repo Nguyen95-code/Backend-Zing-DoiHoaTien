@@ -49,6 +49,7 @@ public class CommentPlaylistRestController {
     @PutMapping("/comments")
     public ResponseEntity<Comment> updateComment(@RequestBody Comment comment, @PathVariable Long playlist_id) {
         Playlist playlist = playlistService.findById(playlist_id);
+        comment.setPlaylist(playlist);
         commentService.save(comment);
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
@@ -58,7 +59,7 @@ public class CommentPlaylistRestController {
         Comment comment = commentService.findById(id);
         if (comment == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } playlistService.delete(id);
+        } commentService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

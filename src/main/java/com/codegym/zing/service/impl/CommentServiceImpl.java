@@ -3,6 +3,7 @@ package com.codegym.zing.service.impl;
 import com.codegym.zing.model.Comment;
 import com.codegym.zing.model.Playlist;
 import com.codegym.zing.model.Song;
+import com.codegym.zing.model.User;
 import com.codegym.zing.repository.CommentRepository;
 import com.codegym.zing.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> findAllByPlaylist(Playlist playlist) {
         return commentRepository.findAllByPlaylist(playlist);
+    }
+
+    @Override
+    public List<Comment> findAllByUser(User user) {
+        return commentRepository.findAllByUser(user);
     }
 
     @Override
