@@ -3,6 +3,7 @@ package com.codegym.zing.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "comment")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -10,6 +11,7 @@ public class Comment {
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
     @ManyToOne
     @JoinColumn(name = "song_id")
     private Song song;
