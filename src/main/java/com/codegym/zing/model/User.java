@@ -37,6 +37,8 @@ public class User {
     @OneToMany(targetEntity = Album.class)
     private Set<Album> albumList = new HashSet<>();
 
+    @OneToMany(targetEntity = Album.class)
+    private Set<Comment> comments = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role roles;
@@ -57,6 +59,18 @@ public class User {
         this.playlist = playlist;
         this.albumList = albumList;
         this.roles = roles;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public Long getId() {
