@@ -1,6 +1,7 @@
 package com.codegym.zing.repository;
 
 import com.codegym.zing.model.Comment;
+import com.codegym.zing.model.Playlist;
 import com.codegym.zing.model.Song;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     Iterable<Comment> findOrderByComment();
 
     List<Comment> findAllBySong(Song song);
+    List<Comment> findAllByPlaylist(Playlist playlist);
 }

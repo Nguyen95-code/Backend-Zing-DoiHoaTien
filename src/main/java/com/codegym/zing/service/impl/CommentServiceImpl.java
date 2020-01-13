@@ -1,6 +1,7 @@
 package com.codegym.zing.service.impl;
 
 import com.codegym.zing.model.Comment;
+import com.codegym.zing.model.Playlist;
 import com.codegym.zing.model.Song;
 import com.codegym.zing.repository.CommentRepository;
 import com.codegym.zing.service.CommentService;
@@ -31,6 +32,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> findAllBySong(Song song) {
         return commentRepository.findAllBySong(song);
+    }
+
+    @Override
+    public List<Comment> findAllByPlaylist(Playlist playlist) {
+        return commentRepository.findAllByPlaylist(playlist);
     }
 
     @Override
