@@ -15,7 +15,7 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping("/singers/{singer_id}")
 @RestController
-public class CommentUserRestController {
+public class CommentSingerRestController {
     @Autowired
     private CommentService commentService;
     @Autowired
