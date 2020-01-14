@@ -78,7 +78,7 @@ public class UserRestController {
             }
             users.add(user);
         }
-        users = userService.findAll();
+         else users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
