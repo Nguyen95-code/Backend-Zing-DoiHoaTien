@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin("*")
-@RequestMapping("/users/{user_id}")
+@RequestMapping("/singers/{singer_id}")
 @RestController
 public class CommentUserRestController {
     @Autowired
@@ -26,35 +26,35 @@ public class CommentUserRestController {
     }
 
     @GetMapping("/comments")
-    public ResponseEntity<List<Comment>> listCommentUser(@PathVariable Long user_id){
-        User user = userService.findById(user_id);
-        if (user == null) {
+    public ResponseEntity<List<Comment>> listCommentUser(@PathVariable Long singer_id){
+        User singer = userService.findById(singer_id);
+        if (singer == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        List<Comment> comments = commentService.findAllByUser(user);
+        List<Comment> comments = commentService.findAllByUser(singer);
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @PostMapping("/comments")
-    public ResponseEntity<Comment> createComment(@RequestBody Comment comment, @PathVariable Long user_id){
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment, @PathVariable Long singer_id){
         comment.setUser(getUserCurent());
-        User user = userService.findById(user_id);
-        comment.setUser(user);
+        User singer = userService.findById(singer_id);
+        comment.setSinger(singer);
         commentService.save(comment);
         return new ResponseEntity<Comment>(comment, HttpStatus.OK);
     }
 
     @PutMapping("/comments")
-    public ResponseEntity<Comment> updateComment(@RequestBody Comment comment, @PathVariable Long user_id) {
-        User user = userService.findById(user_id);
-        comment.setUser(user);
+    public ResponseEntity<Comment> updateComment(@RequestBody Comment comment, @PathVariable Long singer_id) {
+        User singer = userService.findById(singer_id);
+        comment.setUser(singer);
         commentService.save(comment);
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
     @DeleteMapping("/comments/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long id, @PathVariable Long user_id) {
-        User user = userService.findById(user_id);
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id, @PathVariable Long singer_id) {
+        User singer = userService.findById(singer_id);
         Comment comment = commentService.findById(id);
         if (comment == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

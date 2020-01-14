@@ -13,14 +13,28 @@ public class Comment {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private  User user;
+    @ManyToOne
     @JoinColumn(name = "song_id")
     private Song song;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "singer_id")
+    private User singer;
     @ManyToOne
     @JoinColumn(name = "playlist_id")
     private Playlist playlist;
+
+    public Comment() {
+    }
+
+    public Comment(String description, User user, Song song, User singer, Playlist playlist) {
+        this.description = description;
+        this.user = user;
+        this.song = song;
+        this.singer = singer;
+        this.playlist = playlist;
+    }
 
     public Long getId() {
         return id;
@@ -38,14 +52,6 @@ public class Comment {
         this.description = description;
     }
 
-    public Song getSong() {
-        return song;
-    }
-
-    public void setSong(Song song) {
-        this.song = song;
-    }
-
     public User getUser() {
         return user;
     }
@@ -54,21 +60,27 @@ public class Comment {
         this.user = user;
     }
 
+    public Song getSong() {
+        return song;
+    }
+
+    public void setSong(Song song) {
+        this.song = song;
+    }
+
+    public User getSinger() {
+        return singer;
+    }
+
+    public void setSinger(User singer) {
+        this.singer = singer;
+    }
+
     public Playlist getPlaylist() {
         return playlist;
     }
 
     public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
-    }
-
-    public Comment(String description, Song song, User user, Playlist playlist) {
-        this.description = description;
-        this.song = song;
-        this.user = user;
-        this.playlist = playlist;
-    }
-
-    public Comment() {
     }
 }
