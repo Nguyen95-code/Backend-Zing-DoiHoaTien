@@ -11,5 +11,5 @@ public interface CommentService extends GeneralService<Comment> {
     Iterable<Comment> findOrderByComment();
     List<Comment> findAllBySong(Song song);
     List<Comment> findAllByPlaylist(Playlist playlist);
-    List<Comment> findAllByUser(User user);
+    List<Comment> findAllBySinger(User user);
 }

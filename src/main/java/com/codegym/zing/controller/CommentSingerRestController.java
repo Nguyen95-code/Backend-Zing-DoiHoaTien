@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RequestMapping("/singers/{singer_id}")
@@ -31,7 +30,7 @@ public class CommentSingerRestController {
         if (singer == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        List<Comment> comments = commentService.findAllByUser(singer);
+        List<Comment> comments = commentService.findAllBySinger(singer);
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 

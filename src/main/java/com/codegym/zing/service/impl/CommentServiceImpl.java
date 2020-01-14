@@ -41,8 +41,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findAllByUser(User user) {
-        return commentRepository.findAllByUser(user);
+    public List<Comment> findAllBySinger(User user) {
+        return commentRepository.findAllBySinger(user);
     }
 
     @Override
