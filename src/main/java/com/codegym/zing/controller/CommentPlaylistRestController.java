@@ -29,8 +29,8 @@ public class CommentPlaylistRestController {
         return userService.getCurrentUser();
     }
     @GetMapping("comments")
-    public ResponseEntity<List<Comment>> listCommentSong(@PathVariable Long song_id){
-        Playlist playlist = playlistService.findById(song_id);
+    public ResponseEntity<List<Comment>> listCommentSong(@PathVariable Long playlist_id){
+        Playlist playlist = playlistService.findById(playlist_id);
         if (playlist == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

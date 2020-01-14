@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin("*")
@@ -73,8 +74,12 @@ public class PlaylistRestController {
     }
 
     @GetMapping("/playlists")
-    public ResponseEntity<List<Playlist>> findAllPlaylist(){
-        List<Playlist> playlists = playlistService.findAllByUser(getUserCurrent());
+    public ResponseEntity<List<Playlist>> findAllPlaylist(@RequestParam("username") Optional<String> username){
+        List<Playlist> playlists;
+        if (username.isPresent()) {
+            User user = userService.findByUsername(username.get());
+            playlists = playlistService.findAllByUser(user);
+        } else playlists = playlistService.findAll();
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
