@@ -10,5 +10,5 @@ public interface SongService extends GeneralService<Song>{
     Iterable<Song> findOrOrderByCreateDate();
     List<Song> findAllBySinger(User user);
     Iterable<Song> findOrOrderByViews();
-
+    List<Song> findAllByNameContaining(String name);
 }

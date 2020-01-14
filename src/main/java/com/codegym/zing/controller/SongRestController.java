@@ -9,9 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -28,8 +29,11 @@ public class SongRestController {
     }
 
     @GetMapping("/songs")
-    public ResponseEntity<List<Song>> listSong() {
-        List<Song> songs = songService.findAll();
+    public ResponseEntity<List<Song>> listSong(@RequestParam("name") Optional<String> name) {
+        List<Song> songs = new ArrayList<>();
+        if (name.isPresent()){
+          songs = songService.findAllByNameContaining(name.get());
+        } else songs = songService.findAll();
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 

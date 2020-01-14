@@ -15,4 +15,5 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     List<Song> findAllByUser(User user);
     @Query("select s from Song s order by s.views desc")
     Iterable<Song> findOrderByViews();
+    List<Song> findAllByNameContaining(String name);
 }

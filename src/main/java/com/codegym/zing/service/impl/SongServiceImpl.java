@@ -46,6 +46,12 @@ public class SongServiceImpl implements SongService {
     public Iterable<Song> findOrOrderByViews(){
         return songRepository.findOrderByViews();
     }
+
+    @Override
+    public List<Song> findAllByNameContaining(String name) {
+        return songRepository.findAllByNameContaining(name);
+    }
+
     @Override
     public Iterable<Song> findOrOrderByCreateDate() {
         return songRepository.findOrderByCreateDate();
