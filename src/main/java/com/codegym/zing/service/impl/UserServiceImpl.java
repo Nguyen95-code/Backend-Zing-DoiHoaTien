@@ -1,7 +1,9 @@
 package com.codegym.zing.service.impl;
 
+import com.codegym.zing.model.Role;
 import com.codegym.zing.model.User;
 import com.codegym.zing.model.UserPrinciple;
+import com.codegym.zing.repository.RoleRepository;
 import com.codegym.zing.repository.UserRepository;
 import com.codegym.zing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
@@ -119,5 +123,12 @@ public class UserServiceImpl implements UserService {
             isCorrentConfirmPassword = true;
         }
         return isCorrentConfirmPassword;
+    }
+
+    @Override
+    public List<User> findAllByRoleSinger() {
+        Role role = roleRepository.findRoleByName("ROLE_SINGER");
+        List<User> users = userRepository.findAllByRoles(role);
+        return users;
     }
 }

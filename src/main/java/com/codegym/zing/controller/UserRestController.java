@@ -3,11 +3,9 @@ package com.codegym.zing.controller;
 import com.codegym.zing.model.JwtResponse;
 import com.codegym.zing.model.Role;
 import com.codegym.zing.model.User;
-import com.codegym.zing.model.VerificationToken;
 import com.codegym.zing.service.PlaylistService;
 import com.codegym.zing.service.RoleService;
 import com.codegym.zing.service.UserService;
-import com.codegym.zing.service.VerificationTokenService;
 import com.codegym.zing.service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -23,8 +21,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -40,9 +36,6 @@ public class UserRestController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private VerificationTokenService verificationTokenService;
 
     @Autowired
     private JwtService jwtService;
@@ -69,17 +62,12 @@ public class UserRestController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> listUser(@RequestParam("username") Optional<String> username){
-        List<User> users = new ArrayList<>();
-        if (username.isPresent()){
-            User user = userService.findByUsername(username.get());
-            if (user == null){
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            users.add(user);
+    public ResponseEntity<User> findUserByUsername(@RequestParam("username") String username){
+        User user = userService.findByUsername(username);
+        if (user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-         else users = userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/register")
@@ -104,9 +92,6 @@ public class UserRestController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
         userService.save(user);
-        VerificationToken token = new VerificationToken(user);
-        token.setExpiryDate(10);
-        verificationTokenService.save(token);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 

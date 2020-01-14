@@ -22,15 +22,17 @@ public class SingerRestController {
     private SongService songService;
 
     @GetMapping("/singers")
-    public ResponseEntity<List<User>> listSinger() {
-        List<User> users = userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<User>> findAllSingers(){
+        List<User> singers = userService.findAllByRoleSinger();
+        return new ResponseEntity<>(singers, HttpStatus.OK);
     }
 
     @GetMapping("/singers/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
         User user = userService.findById(id);
         if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (!user.getRoles().getName().equals("ROLE_SINGER")){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);

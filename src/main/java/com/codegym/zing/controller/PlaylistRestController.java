@@ -25,13 +25,13 @@ public class PlaylistRestController {
     private UserService userService;
 
     @ModelAttribute("userCurent")
-    public User getUserCurent(){
+    public User getUserCurrent(){
         return userService.getCurrentUser();
     }
 
     @PostMapping("/playlists")
     public ResponseEntity<Void> savePlaylist(@RequestBody Playlist playlist){
-        playlist.setUser(getUserCurent());
+        playlist.setUser(getUserCurrent());
         playlistService.save(playlist);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -74,14 +74,14 @@ public class PlaylistRestController {
 
     @GetMapping("/playlists")
     public ResponseEntity<List<Playlist>> findAllPlaylist(){
-        List<Playlist> playlists = playlistService.findAllByUser(getUserCurent());
+        List<Playlist> playlists = playlistService.findAllByUser(getUserCurrent());
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
 
     @GetMapping("/playlists/{playlistId}")
     public ResponseEntity<Playlist> findById(@PathVariable Long playlistId){
         Playlist playlist = playlistService.findById(playlistId);
-        if (playlist == null || playlist.getUser().getId() != getUserCurent().getId()){
+        if (playlist == null || playlist.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(playlist, HttpStatus.OK);
@@ -90,7 +90,7 @@ public class PlaylistRestController {
     @GetMapping("/playlists/{playlistId}/songs")
     public ResponseEntity<Set<Song>> findAllSongs(@PathVariable Long playlistId){
         Playlist playlist = playlistService.findById(playlistId);
-        if (playlist == null || playlist.getUser().getId() != getUserCurent().getId()){
+        if (playlist == null || playlist.getUser().getId() != getUserCurrent().getId()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(playlist.getSongList(), HttpStatus.OK);
