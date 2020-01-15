@@ -86,7 +86,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/singers/**").access("hasAnyRole('ROLE_USER', 'ROLE_SINGER')")
                 .antMatchers(HttpMethod.POST,
                              "/playlists/**",
-                        "/new-password/**").access("hasAnyRole('ROLE_USER', 'ROLE_SINGER')")
+                        "/new-password/**",
+                        "/songs/**/comments/**",
+                        "/playlists/**/comments/**",
+                        "/singers/**/comments/**").access("hasAnyRole('ROLE_USER', 'ROLE_SINGER')")
                 .antMatchers(HttpMethod.POST,
                         "/songs/**",
                         "/albums/**",
