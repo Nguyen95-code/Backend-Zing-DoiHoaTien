@@ -124,6 +124,11 @@ public class UserRestController {
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+    @PutMapping("/users")
+    public ResponseEntity<User> updateUser(@RequestBody User user){
+        userService.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @GetMapping("/userCurrent")
     public ResponseEntity<User> userCurrent(){
