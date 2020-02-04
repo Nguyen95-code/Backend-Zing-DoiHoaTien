@@ -32,8 +32,6 @@ public class TagRestController {
         Song song = songService.findById(song_id);
         if (song == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (song.getUser().getId() != getUserCurrent().getId()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         List<Tag> tags = tagService.findAllBySong(song);
         return new ResponseEntity<>(tags, HttpStatus.OK);
@@ -51,6 +49,4 @@ public class TagRestController {
         tagService.save(tag);
         return new ResponseEntity<>(tag, HttpStatus.OK);
     }
-
-
 }

@@ -37,21 +37,6 @@ public class LikePlaylistRestController {
         List<Like> likes = likeService.findAllByPlaylist(playlist);
         return new ResponseEntity<>(likes,HttpStatus.OK);
     }
-
-    @GetMapping("/likes/users/{user_id}")
-    public ResponseEntity<Boolean> checkUserLikePlaylist(@PathVariable Long playlist_id, @PathVariable Long user_id){
-        Playlist playlist = playlistService.findById(playlist_id);
-        if (playlist == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        List<Like> likes = likeService.findAllByPlaylist(playlist);
-        for (Like like: likes) {
-            if (like.getUser().getId() == user_id) {
-                return new ResponseEntity<>(true, HttpStatus.OK);
-            }
-        }
-        return new ResponseEntity<>(false, HttpStatus.OK);
-    }
     @PostMapping("likes")
     public ResponseEntity<Like> createLikePlaylist(@RequestBody Like like,@PathVariable Long playlist_id){
         like.setUser(getUserCurent());
