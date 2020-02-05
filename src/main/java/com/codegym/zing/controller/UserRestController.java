@@ -135,4 +135,6 @@ public class UserRestController {
         User user = userService.getCurrentUser();
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+
 }

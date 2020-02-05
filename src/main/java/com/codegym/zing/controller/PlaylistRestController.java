@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,6 +34,7 @@ public class PlaylistRestController {
 
     @PostMapping("/playlists")
     public ResponseEntity<Void> savePlaylist(@RequestBody Playlist playlist){
+        playlist.setCreateDate(LocalDate.now());
         playlist.setUser(getUserCurrent());
         playlist.setViews(0);
         playlistService.save(playlist);
@@ -100,5 +103,15 @@ public class PlaylistRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(playlist.getSongList(), HttpStatus.OK);
+    }
+    @GetMapping("/playlists/views")
+    public ResponseEntity<List<Playlist>> playlistTopView(){
+        List<Playlist> playlists = (List<Playlist>) playlistService.findOrOrderByViews();
+        return new ResponseEntity<>(playlists, HttpStatus.OK);
+    }
+    @GetMapping("/playlists/new")
+    public ResponseEntity<List<Playlist>> playistNew(){
+        List<Playlist> playlists = (List<Playlist>) playlistService.findOrOrderByCreateDate();
+        return new ResponseEntity<>(playlists,HttpStatus.OK);
     }
 }

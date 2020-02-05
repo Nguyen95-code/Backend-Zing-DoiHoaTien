@@ -81,8 +81,18 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
+    public Iterable<Playlist> findOrOrderByCreateDate() {
+        return playlistRepository.findOrderByCreateDate();
+    }
+
+    @Override
     public Iterable<Playlist> findOrOrderByViews(){
         return playlistRepository.findOrderByViews();
+    }
+
+    @Override
+    public List<Playlist> findAllByNameContaining(String name) {
+        return playlistRepository.findAllByNameContaining(name);
     }
 
 }

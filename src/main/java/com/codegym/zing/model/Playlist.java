@@ -1,6 +1,7 @@
 package com.codegym.zing.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ public class Playlist {
     private String name;
     private String image;
     private long views;
+    private LocalDate createDate;
 
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -28,12 +30,13 @@ public class Playlist {
     public Playlist() {
     }
 
-    public Playlist(String name,long views, String image, Set<Song> songList, User user) {
+    public Playlist(String name,long views, String image,LocalDate createDate, Set<Song> songList, User user) {
         this.name = name;
         this.image = image;
         this.views = views;
         this.songList = songList;
         this.user = user;
+        this.createDate = createDate;
     }
 
     public long getViews() {
@@ -82,5 +85,13 @@ public class Playlist {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDate createDate) {
+        this.createDate = createDate;
     }
 }

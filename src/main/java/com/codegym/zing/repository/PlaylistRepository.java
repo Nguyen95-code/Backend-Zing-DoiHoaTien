@@ -10,8 +10,11 @@ import java.util.List;
 
 @Repository
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
+    @Query("select s from Playlist s order by s.createDate desc")
+    Iterable<Playlist> findOrderByCreateDate();
     List<Playlist> findAllByUser(User user);
     @Query("select s from Playlist s order by s.views desc")
     Iterable<Playlist> findOrderByViews();
+    List<Playlist> findAllByNameContaining(String name);
 
 }
