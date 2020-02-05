@@ -28,7 +28,7 @@ public class CommentSongRestController {
         return userService.getCurrentUser();
     }
 
-    @GetMapping("comments")
+    @GetMapping("/comments")
     public ResponseEntity<List<Comment>> listCommentSong(@PathVariable Long song_id){
         Song song = songService.findById(song_id);
         if (song == null) {

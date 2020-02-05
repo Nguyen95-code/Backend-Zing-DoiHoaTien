@@ -33,6 +33,7 @@ public class PlaylistRestController {
     @PostMapping("/playlists")
     public ResponseEntity<Void> savePlaylist(@RequestBody Playlist playlist){
         playlist.setUser(getUserCurrent());
+        playlist.setViews(0);
         playlistService.save(playlist);
         return new ResponseEntity<>(HttpStatus.OK);
     }

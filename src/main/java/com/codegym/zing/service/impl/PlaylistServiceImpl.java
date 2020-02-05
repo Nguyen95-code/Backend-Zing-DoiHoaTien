@@ -80,5 +80,9 @@ public class PlaylistServiceImpl implements PlaylistService {
         return playlistRepository.findAllByUser(user);
     }
 
+    @Override
+    public Iterable<Playlist> findOrOrderByViews(){
+        return playlistRepository.findOrderByViews();
+    }
 
 }
