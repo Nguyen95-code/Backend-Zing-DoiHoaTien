@@ -13,6 +13,9 @@ public class Tag {
     @JoinColumn(name = "song_id")
     private Song song;
 
+    public Tag() {
+    }
+
     public Tag(String description, Song song) {
         this.description = description;
         this.song = song;
