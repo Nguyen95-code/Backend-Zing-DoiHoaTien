@@ -80,10 +80,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         return playlistRepository.findAllByUser(user);
     }
 
-    @Override
-    public Iterable<Playlist> findOrOrderByCreateDate() {
-        return playlistRepository.findOrderByCreateDate();
-    }
+
 
     @Override
     public Iterable<Playlist> findOrOrderByViews(){

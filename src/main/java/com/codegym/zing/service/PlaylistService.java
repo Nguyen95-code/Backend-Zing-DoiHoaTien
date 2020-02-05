@@ -10,7 +10,6 @@ public interface PlaylistService extends GeneralService<Playlist>{
     void addSong(Long playlistId, Long songId);
     void deleteSong(Long playlistId, Long songId);
     List<Playlist> findAllByUser(User user);
-    Iterable<Playlist> findOrOrderByCreateDate();
     Iterable<Playlist> findOrOrderByViews();
     List<Playlist> findAllByNameContaining(String name);
 }

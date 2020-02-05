@@ -34,7 +34,6 @@ public class PlaylistRestController {
 
     @PostMapping("/playlists")
     public ResponseEntity<Void> savePlaylist(@RequestBody Playlist playlist){
-        playlist.setCreateDate(LocalDate.now());
         playlist.setUser(getUserCurrent());
         playlist.setViews(0);
         playlistService.save(playlist);
@@ -109,9 +108,5 @@ public class PlaylistRestController {
         List<Playlist> playlists = (List<Playlist>) playlistService.findOrOrderByViews();
         return new ResponseEntity<>(playlists, HttpStatus.OK);
     }
-    @GetMapping("/playlists/new")
-    public ResponseEntity<List<Playlist>> playistNew(){
-        List<Playlist> playlists = (List<Playlist>) playlistService.findOrOrderByCreateDate();
-        return new ResponseEntity<>(playlists,HttpStatus.OK);
-    }
+
 }
