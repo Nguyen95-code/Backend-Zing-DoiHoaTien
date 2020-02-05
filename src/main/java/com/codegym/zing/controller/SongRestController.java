@@ -83,4 +83,15 @@ public class SongRestController {
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
+    @GetMapping("/songs/my_song/{user_id}")
+    public ResponseEntity<List<Song>> findSongBySinger(@PathVariable Long user_id){
+        User user = userService.findById(user_id);
+        if (user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (user.getRoles().getName()!="ROLE_SINGER"){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<Song> songs = songService.findAllBySinger(user);
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
 }
