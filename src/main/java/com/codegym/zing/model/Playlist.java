@@ -1,7 +1,6 @@
 package com.codegym.zing.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,8 +12,6 @@ public class Playlist {
     private Long id;
     private String name;
     private String image;
-    private long views;
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "playlist_song",
@@ -29,21 +26,12 @@ public class Playlist {
     public Playlist() {
     }
 
-    public Playlist(String name,long views, String image, Set<Song> songList, User user) {
+    public Playlist(String name, String image, Set<Song> songList, User user) {
         this.name = name;
         this.image = image;
-        this.views = views;
         this.songList = songList;
         this.user = user;
 
-    }
-
-    public long getViews() {
-        return views;
-    }
-
-    public void setViews(long views) {
-        this.views = views;
     }
 
     public Long getId() {

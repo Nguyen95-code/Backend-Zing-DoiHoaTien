@@ -80,13 +80,6 @@ public class PlaylistServiceImpl implements PlaylistService {
         return playlistRepository.findAllByUser(user);
     }
 
-
-
-    @Override
-    public Iterable<Playlist> findOrOrderByViews(){
-        return playlistRepository.findOrderByViews();
-    }
-
     @Override
     public List<Playlist> findAllByNameContaining(String name) {
         return playlistRepository.findAllByNameContaining(name);
