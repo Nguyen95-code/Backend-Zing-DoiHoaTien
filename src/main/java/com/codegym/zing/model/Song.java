@@ -16,7 +16,7 @@ public class Song {
     private String image;
     private long views;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "text")
     private String description;
     private LocalDate createDate;
 
